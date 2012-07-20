@@ -12,7 +12,14 @@ endif
 let s:sdir = fnamemodify(expand('<sfile>'), ':h')
 
 function! s:icon_name(word)
-    return isdirectory(a:word) ? "folder" : matchstr(fnamemodify(a:word, ':e'), '\w\+')
+    if isdirectory(a:word)
+        return "folder"
+    endif
+    let ext = matchstr(fnamemodify(a:word, ':e'), '\w\+')
+    if len(ext) == 0
+        return "file"
+    endif
+    return ext
 endfunction
 
 function! s:sign_name(word)
