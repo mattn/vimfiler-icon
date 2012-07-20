@@ -23,8 +23,8 @@ function! s:sign_define_icon(file)
     let name = s:icon_name(a:file)
     let fname = s:icon_dir . '/' . name . '.ico'
     if len(name) && !filereadable(fname)
-        call system(printf("%s %s %s",
-        \  fnamemodify(printf("%s/fileicon", s:sdir), ':8'),
+        call s:system(printf("%s %s %s",
+        \  shellescape(printf("%s/fileicon.exe", substitute(s:sdir, '\', '/', 'g'))),
         \  shellescape(substitute(a:file, '/', '\', 'g')),
         \  fnamemodify(fname, ':p:8')))
     endif
@@ -65,3 +65,4 @@ function! s:BuildIcons()
 endfunction
 
 autocmd CursorMoved <buffer> call s:BuildIcons()
+autocmd BufLeave <buffer> let b:vimfiler_icon_dir = ''
